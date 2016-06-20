@@ -4,20 +4,17 @@ import TodoList from '../../src/components/TodoList';
 import {expect} from 'chai';
 import {List, Map} from 'immutable';
 
-const {renderIntoDocument,
-       scryRenderedDOMComponentsWithTag} = TestUtils;
+const {renderIntoDocument, scryRenderedDOMComponentsWithTag} = TestUtils;
 
-describe('TodoList', () => {
+describe('TodoList', function() {
   it('renders a list with only the active items if the filter is active', () => {
     const todos = List.of(
-      Map({id: 1, text: 'React', status: 'active'}),
-      Map({id: 2, text: 'Redux', status: 'active'}),
-      Map({id: 3, text: 'Immutable', status: 'completed'})
+      new Map({id: 1, text: 'React', status: 'active'}),
+      new Map({id: 2, text: 'Redux', status: 'active'}),
+      new Map({id: 3, text: 'Immutable', status: 'completed'})
     );
     const filter = 'active';
-    const component = renderIntoDocument(
-      <TodoList filter={filter} todos={todos} />
-    );
+    const component = renderIntoDocument(<TodoList filter={filter} todos={todos} />);
     const items = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(items.length).to.equal(2);
@@ -25,32 +22,28 @@ describe('TodoList', () => {
     expect(items[1].textContent).to.contain('Redux');
   });
 
-  it('renders a list with only completed items if the filter is completed', () => {
+  it('renders a list with only completed items if the filter is completed', function() {
     const todos = List.of(
-      Map({id: 1, text: 'React', status: 'active'}),
-      Map({id: 2, text: 'Redux', status: 'active'}),
-      Map({id: 3, text: 'Immutable', status: 'completed'})
+      new Map({id: 1, text: 'React', status: 'active'}),
+      new Map({id: 2, text: 'Redux', status: 'active'}),
+      new Map({id: 3, text: 'Immutable', status: 'completed'})
     );
     const filter = 'completed';
-    const component = renderIntoDocument(
-      <TodoList filter={filter} todos={todos} />
-    );
+    const component = renderIntoDocument(<TodoList filter={filter} todos={todos} />);
     const items = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(items.length).to.equal(1);
     expect(items[0].textContent).to.contain('Immutable');
   });
 
-  it('renders a list with all the items', () => {
+  it('renders a list with all the items', function() {
     const todos = List.of(
-      Map({id: 1, text: 'React', status: 'active'}),
-      Map({id: 2, text: 'Redux', status: 'active'}),
-      Map({id: 3, text: 'Immutable', status: 'completed'})
+      new Map({id: 1, text: 'React', status: 'active'}),
+      new Map({id: 2, text: 'Redux', status: 'active'}),
+      new Map({id: 3, text: 'Immutable', status: 'completed'})
     );
     const filter = 'all';
-    const component = renderIntoDocument(
-      <TodoList filter={filter} todos={todos} />
-    );
+    const component = renderIntoDocument(<TodoList filter={filter} todos={todos} />);
     const items = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(items.length).to.equal(3);

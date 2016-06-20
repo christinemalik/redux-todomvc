@@ -3,17 +3,16 @@ import {expect} from 'chai';
 
 import reducer from '../src/reducer';
 
-describe('reducer', () => {
-
-  it('handles SET_STATE', () => {
-    const initialState = Map();
+describe('reducer', function() {
+  it('handles SET_STATE', function() {
+    const initialState = new Map();
     const action = {
       type: 'SET_STATE',
-      state: Map({
+      state: new Map({
         todos: List.of(
-          Map({id: 1, text: 'React', status: 'active'}),
-          Map({id: 2, text: 'Redux', status: 'active'}),
-          Map({id: 3, text: 'Immutable', status: 'completed'})
+          new Map({id: 1, text: 'React', status: 'active'}),
+          new Map({id: 2, text: 'Redux', status: 'active'}),
+          new Map({id: 3, text: 'Immutable', status: 'completed'})
         )
       })
     };
@@ -29,8 +28,8 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles SET_STATE with plain JS payload', () => {
-    const initialState = Map();
+  it('handles SET_STATE with plain JS payload', function() {
+    const initialState = new Map();
     const action = {
       type: 'SET_STATE',
       state: {
@@ -51,7 +50,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles SET_STATE without initial state', () => {
+  it('handles SET_STATE without initial state', function() {
     const action = {
       type: 'SET_STATE',
       state: {
@@ -72,7 +71,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles TOGGLE_COMPLETE by changing the status from active to completed', () => {
+  it('handles TOGGLE_COMPLETE by changing the status from active to completed', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active'},
@@ -83,7 +82,7 @@ describe('reducer', () => {
     const action = {
       type: 'TOGGLE_COMPLETE',
       itemId: 1
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -94,7 +93,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles TOGGLE_COMPLETE by changing the status from completed to active', () => {
+  it('handles TOGGLE_COMPLETE by changing the status from completed to active', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active'},
@@ -105,7 +104,7 @@ describe('reducer', () => {
     const action = {
       type: 'TOGGLE_COMPLETE',
       itemId: 3
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -116,7 +115,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles CHANGE_FILTER by changing the filter', () => {
+  it('handles CHANGE_FILTER by changing the filter', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active'},
@@ -126,7 +125,7 @@ describe('reducer', () => {
     const action = {
       type: 'CHANGE_FILTER',
       filter: 'active'
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -136,7 +135,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles EDIT_ITEM by setting editing to true', () => {
+  it('handles EDIT_ITEM by setting editing to true', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active', editing: false},
@@ -145,7 +144,7 @@ describe('reducer', () => {
     const action = {
       type: 'EDIT_ITEM',
       itemId: 1
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -154,7 +153,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles CANCEL_EDITING by setting editing to false', () => {
+  it('handles CANCEL_EDITING by setting editing to false', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active', editing: true},
@@ -163,7 +162,7 @@ describe('reducer', () => {
     const action = {
       type: 'CANCEL_EDITING',
       itemId: 1
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -172,7 +171,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles DONE_EDITING by setting by updating the text', () => {
+  it('handles DONE_EDITING by setting by updating the text', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active', editing: true},
@@ -182,7 +181,7 @@ describe('reducer', () => {
       type: 'DONE_EDITING',
       itemId: 1,
       newText: 'Redux',
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -191,7 +190,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles CLEAR_COMPLETED by removing all the completed items', () => {
+  it('handles CLEAR_COMPLETED by removing all the completed items', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active'},
@@ -200,7 +199,7 @@ describe('reducer', () => {
     });
     const action = {
       type: 'CLEAR_COMPLETED'
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -209,7 +208,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles ADD_ITEM by adding the item', () => {
+  it('handles ADD_ITEM by adding the item', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active'}
@@ -218,7 +217,7 @@ describe('reducer', () => {
     const action = {
       type: 'ADD_ITEM',
       text: 'Redux'
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [
@@ -228,7 +227,7 @@ describe('reducer', () => {
     }));
   });
 
-  it('handles DELETE_ITEM by removing the item', () => {
+  it('handles DELETE_ITEM by removing the item', function() {
     const initialState = fromJS({
       todos: [
         {id: 1, text: 'React', status: 'active'},
@@ -238,7 +237,7 @@ describe('reducer', () => {
     const action = {
       type: 'DELETE_ITEM',
       itemId: 2
-    }
+    };
     const nextState = reducer(initialState, action);
     expect(nextState).to.equal(fromJS({
       todos: [

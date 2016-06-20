@@ -3,43 +3,35 @@ import TestUtils from 'react-addons-test-utils';
 import TodoItem from '../../src/components/TodoItem';
 import {expect} from 'chai';
 
-const {renderIntoDocument,
-       scryRenderedDOMComponentsWithTag,
-       Simulate} = TestUtils;
+const {renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate} = TestUtils;
 
-describe('TodoItem', () => {
-  it('renders an item', () => {
+describe('TodoItem', function() {
+  it('renders an item', function() {
     const text = 'React';
-    const component = renderIntoDocument(
-      <TodoItem text={text} />
-    );
+    const component = renderIntoDocument(<TodoItem text={text} />);
     const todo = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(todo.length).to.equal(1);
     expect(todo[0].textContent).to.contain('React');
   });
 
-  it('strikes through the item if it is completed', () => {
+  it('strikes through the item if it is completed', function() {
     const text = 'React';
-    const component = renderIntoDocument(
-      <TodoItem text={text} isCompleted={true}/>
-    );
+    const component = renderIntoDocument(<TodoItem text={text} isCompleted={true}/>);
     const todo = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(todo[0].classList.contains('completed')).to.equal(true);
   });
 
-  it('should look different when editing', () => {
+  it('should look different when editing', function() {
     const text = 'React';
-    const component = renderIntoDocument(
-      <TodoItem text={text} isEditing={true}/>
-    );
+    const component = renderIntoDocument(<TodoItem text={text} isEditing={true}/>);
     const todo = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(todo[0].classList.contains('editing')).to.equal(true);
   });
 
-  it('should be checked if the item is completed', () => {
+  it('should be checked if the item is completed', function() {
     const text = 'React';
     const text2 = 'Redux';
     const component = renderIntoDocument(
@@ -51,39 +43,39 @@ describe('TodoItem', () => {
     expect(input[1].checked).to.equal(false);
   });
 
-  it('invokes callback when the delete button is clicked', () => {
+  it('invokes callback when the delete button is clicked', function() {
     const text = 'React';
     var deleted = false;
-    const deleteItem = () => deleted = true;
-    const component = renderIntoDocument(
-      <TodoItem text={text} deleteItem={deleteItem}/>
-    );
+    const deleteItem = function() {
+      deleted = true;
+    };
+    const component = renderIntoDocument(<TodoItem text={text} deleteItem={deleteItem}/>);
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     Simulate.click(buttons[0]);
 
     expect(deleted).to.equal(true);
   });
 
-  it('invokes callback when checkbox is clicked', () => {
+  it('invokes callback when checkbox is clicked', function() {
     const text = 'React';
     var isChecked = false;
-    const toggleComplete = () => isChecked = true;
-    const component = renderIntoDocument(
-      <TodoItem text={text} toggleComplete={toggleComplete}/>
-    );
+    const toggleComplete = function() {
+      isChecked = true;
+    };
+    const component = renderIntoDocument(<TodoItem text={text} toggleComplete={toggleComplete}/>);
     const checkboxes = scryRenderedDOMComponentsWithTag(component, 'input');
     Simulate.click(checkboxes[0]);
 
     expect(isChecked).to.equal(true);
   });
 
-  it('calls a callback when text is double clicked', () => {
+  it('calls a callback when text is double clicked', function() {
     var text = 'React';
-    const editItem = () => text = 'Redux';
-    const component = renderIntoDocument(
-      <TodoItem text={text} editItem={editItem}/>
-    );
-    const label = component.refs.text
+    const editItem = function() {
+      text = 'Redux';
+    };
+    const component = renderIntoDocument(<TodoItem text={text} editItem={editItem}/>);
+    const label = component.refs.text;
     Simulate.doubleClick(label);
 
     expect(text).to.equal('Redux');

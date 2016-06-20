@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
 export default class TextInput extends React.Component {
   constructor(props) {
@@ -16,10 +16,10 @@ export default class TextInput extends React.Component {
   }
   _handleKeyDown(e) {
     switch (e.key) {
-      case 'Enter':
-        return this.props.doneEditing(this.props.itemId, this.state.value);
-      case 'Escape':
-        return this.cancelEditing();
+    case 'Enter':
+      return this.props.doneEditing(this.props.itemId, this.state.value);
+    case 'Escape':
+      return this.cancelEditing();
     }
   }
   _handleOnBlur(e) {
@@ -29,14 +29,15 @@ export default class TextInput extends React.Component {
     this.setState({value: e.target.value});
   }
   render() {
-    return <input className="edit"
-                  autoFocus={true}
-                  value={this.state.value}
-                  onChange={this._handleOnChange.bind(this)}
-                  type="text"
-                  ref="itemInput"
-                  onKeyDown={this._handleKeyDown.bind(this)}
-                  onBlur={this._handleOnBlur.bind(this)}
-                  />
+    return (
+      <input  className="edit"
+              autoFocus={true}
+              value={this.state.value}
+              onChange={this._handleOnChange.bind(this)}
+              type="text"
+              ref="itemInput"
+              onKeyDown={this._handleKeyDown.bind(this)}
+              onBlur={this._handleOnBlur.bind(this)} />
+    );
   }
 };

@@ -60,8 +60,8 @@ function clearCompleted(state) {
 }
 
 function addItem(state, text) {
-  const itemId = state.get('todos').reduce((maxId, item) => Math.max(maxId,item.get('id')), 0) + 1;
-  const newItem = Map({id: itemId, text: text, status: 'active'});
+  const itemId = state.get('todos').reduce((maxId, item) => Math.max(maxId, item.get('id')), 0) + 1;
+  const newItem = new Map({id: itemId, text: text, status: 'active'});
   return state.update('todos', (todos) => todos.push(newItem));
 }
 
@@ -73,26 +73,26 @@ function deleteItem(state, itemId) {
   );
 }
 
-export default function(state = Map(), action) {
+export default function(state = new Map(), action) {
   switch (action.type) {
-    case 'SET_STATE':
-      return setState(state, action.state);
-    case 'TOGGLE_COMPLETE':
-      return toggleComplete(state, action.itemId);
-    case 'CHANGE_FILTER':
-      return changeFilter(state, action.filter);
-    case 'EDIT_ITEM':
-      return editItem(state, action.itemId);
-    case 'CANCEL_EDITING':
-      return cancelEditing(state, action.itemId);
-    case 'DONE_EDITING':
-      return doneEditing(state, action.itemId, action.newText);
-    case 'CLEAR_COMPLETED':
-      return clearCompleted(state);
-    case 'ADD_ITEM':
-      return addItem(state, action.text);
-    case 'DELETE_ITEM':
-      return deleteItem(state, action.itemId);
+  case 'SET_STATE':
+    return setState(state, action.state);
+  case 'TOGGLE_COMPLETE':
+    return toggleComplete(state, action.itemId);
+  case 'CHANGE_FILTER':
+    return changeFilter(state, action.filter);
+  case 'EDIT_ITEM':
+    return editItem(state, action.itemId);
+  case 'CANCEL_EDITING':
+    return cancelEditing(state, action.itemId);
+  case 'DONE_EDITING':
+    return doneEditing(state, action.itemId, action.newText);
+  case 'CLEAR_COMPLETED':
+    return clearCompleted(state);
+  case 'ADD_ITEM':
+    return addItem(state, action.text);
+  case 'DELETE_ITEM':
+    return deleteItem(state, action.itemId);
   }
   return state;
 }
